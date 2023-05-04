@@ -1,0 +1,427 @@
+Download Link: https://assignmentchef.com/product/solved-csci3202-assignment2
+<br>
+This assignment satisfies learning objective 2 (LO2) as specified in the syllabus. You will apply conceptual knowledge of core AI concepts by implementing AI algorithms, analyzing existing intelligent systems (including humans), and using existing AI tools to solve problems.
+
+<h1>Getting Help</h1>
+
+We want these projects to be rewarding and instructional, not frustrating and demoralizing. But, we don’t know when or how to help unless you ask. If you find yourself stuck on something, contact us via Piazza or come by the office hours. If you can’t make our office hours, let us know and we will be happy to schedule alternate times.
+
+<h1>Overview</h1>
+
+This assignment has two parts, both are required. The first part has you implement a basic Genetic Algorithm, the second has you apply what you have learned to a more complex environment, experiment with it, and analyse the results. ​Be sure to read both parts before beginning. If your code for Part 1 is general enough, you can reuse a lot of it for Part 2.
+
+
+
+
+<strong>Note: </strong>​The experiments in Part 2 can take a while to run. Be sure to give yourself plenty of time.
+
+<h1>Skeleton Code</h1>
+
+You can download the skeleton code from Canvas – “Assignment2_SkeletonCode.zip”. This assignment uses ​<strong>Python3.</strong>​ You may use NumPy, as well as standard libraries such as random.
+
+<h1>Part 1</h1>
+
+In this assignment, you will implement a simple genetic algorithm to maximise the number of ‘1’s in a bit string. A genome will be a bitstring. ​<strong>Selection </strong>​will be performed using fitness-proportionate selection (roulette-wheel sampling). We will use single point ​<strong>crossover</strong>​, and ​<strong>mutation </strong>​will be characterized as flipping a bit. If you need a reminder for each of the stages, Figure 4.6 in Russell and Norvig (and the Slides) provides a good overview.
+
+The ​<strong>goal </strong>​is for the bitstring to be all ones. We will use the following fitness function to reach the goal:
+
+f(​<em>x</em>​) = number of ones in ​<em>x</em>​, where ​<em>x</em>​ is a genome of length 20. Eg. [01001110011001101000] would have a fitness of 9.
+
+<strong>Implementation [3pts]: </strong>
+
+To make implementing your GA easier, we have provided skeleton code in ​<strong>part1.py</strong>​. In order to complete the first part of the assignment you should implement the following functions:
+
+<ul>
+
+ <li><strong>randomGenome(</strong>​<strong><em>length</em></strong>​<strong>)</strong>​ returns a random genome (bit string) of a given length.</li>
+
+ <li><strong>makePopulation(</strong>​<strong><em>size, length</em></strong>​<strong>)</strong>​ returns a new randomly created population of the specified size, represented as a list of genomes of the specified length.</li>
+
+ <li><strong>fitness(</strong>​<strong><em>genome</em></strong>​<strong>)</strong>​ returns the fitness value of a genome.</li>
+
+ <li><strong>evaluateFitness(</strong>​<strong><em>population</em></strong>​<strong>)</strong>​ returns a pair of values: the average fitness of the population as a whole and the fitness of the best individual in the population.</li>
+
+ <li><strong>crossover(<em>genome1, genome2</em></strong>​ ​<strong>)</strong>​ returns two new genomes produced by crossing over the given genomes at a random crossover point.</li>
+
+ <li><strong>mutate(</strong>​<strong><em>genome, mutationRate</em></strong>​<strong>)</strong> returns a new mutated version of the given genome.​</li>
+
+ <li><strong>selectPair(</strong>​<strong><em>population</em></strong>​<strong>)</strong>​ selects and returns two genomes from the given population using fitness-proportionate selection. This function should use <em>weightedChoice</em>​ ​ to select each genome. ​<em>weightedChoice</em>​ is already provided and takes two arguments, the list of genomes, and a list of weights, in this case the weights can be the associated fitness for each genome.</li>
+
+</ul>
+
+There are tests for each of these functions at the end of the skeleton code, simply uncomment as you go to experiment with each. We can’t guarantee that this program will detect all possible bugs that may exist in your code, but it should catch the most egregious ones. Once you have implemented each of the above functions, you will then implement the function below:
+
+<ul>
+
+ <li><strong>runGA(</strong>​<strong><em>populationSize</em></strong>​<strong>, </strong>​<strong><em>crossoverRate</em></strong>​<strong>, </strong>​<strong><em>mutationRate</em></strong>​<strong>, </strong>​<strong><em>logFile</em></strong>​<strong>=””)</strong>​ is the main GA program, which takes the population size, crossover rate (​<em>p</em>​<em>c</em><sub>​</sub>), and mutation rate (​<em>p</em>​<em>m</em><sub>​</sub>) as parameters. The optional ​<em>logFile</em>​ parameter is a string specifying the name of a text file in which to store the data generated by the GA for plotting purposes. When the GA terminates​, this function should return the generation at which the string of all ones was found. The GA should run for 50 generations or until the string of all ones is found. If no solution is found, return None.</li>
+
+</ul>
+
+Your GA program should print out, on each generation cycle, the fitness of the best individual in the current population and the average fitness of the population as a whole. It should also give the user the option of recording this output data in a text file. This will enable you to plot the results of each run for easy comparison.
+
+
+
+
+Here is an example of the type of output your program should produce:
+
+
+
+
+&gt;&gt;&gt; <strong>runGA(100, 0.7, 0.001, “run1.txt”)</strong>​
+
+Population size: 100
+
+Genome length: 20
+
+Generation    0: average fitness 10.07, best fitness 15.00
+
+Generation    1: average fitness 10.91, best fitness 15.00
+
+Generation    2: average fitness 11.45, best fitness 16.00
+
+Generation    3: average fitness 12.02, best fitness 16.00
+
+…
+
+Generation   18: average fitness 16.09, best fitness 19.00
+
+Generation   19: average fitness 16.38, best fitness 20.00
+
+Results saved in file run1.txt 19
+
+
+
+
+The contents of the resulting text file ​<strong>run1.txt</strong>​ should look something like this:
+
+
+
+
+<ul>
+
+ <li>07 15.00</li>
+
+ <li>91 15.00</li>
+
+ <li>45 16.00</li>
+
+ <li>02 16.00</li>
+
+</ul>
+
+…
+
+<ul>
+
+ <li>09 19.00</li>
+
+ <li>38 20.00</li>
+
+</ul>
+
+
+
+
+
+
+
+<strong>In your report </strong>
+
+
+
+
+<ol>
+
+ <li>Perform 50 runs with the parameters listed below, measure the average generation at which the string of all ones is discovered, report this as well as the minimum and the maximum. Use the following parameters:</li>
+
+</ol>
+
+
+
+
+population size 100,  single-point crossover rate <em>p</em>​ ​<em>c</em><sub>​</sub> = 0.7,  bitwise mu​tation rate ​<em>p</em>​<em>m</em>​ = 0.001.
+
+
+
+
+Single-point crossover rate (​<em>p</em>​<em>c</em><sub>​</sub> ) is the probability that after selecting two genomes, you will perform single point crossover as shown to the right. In other words, you will only do a cross over 70% of the time.
+
+
+
+
+
+
+
+Mutation rate tells us the probability that a bit will be flipped within the genome. For example if mutation rate was 1, all of the bits of a genome would be flipped every time.
+
+
+
+
+<ol start="2">
+
+ <li>Select a random 5 of the above runs and produce a line plot of average fitness of each of the five populations over time. This should result in one line plotted for each of the five runs all shown on the same graph. Generation should be on the x-axis and average fitness on the y-ax​ Make sure the graph is appropriately labeled. Discuss what you notice across all five runs, note the similarities and differences.</li>
+
+</ol>
+
+
+
+
+<ol start="3">
+
+ <li>Perform the same experiment with crossover turned off (​<em>p</em>​<em>c</em><sub>​</sub> = 0).Describe the effect on the algorithm and provide an explanation.</li>
+
+</ol>
+
+
+
+
+<ol start="4">
+
+ <li>Do similar experiments, systematically varying the mutation and crossover rates, and population size, to see how the variations affect the average time required for the GA to find the optimal string (if at all​). Be careful to only vary one thing at a time, so that you can draw a meaningful conclusion from your simulations. In the report, write a description of your experiments. Write a brief summary (1 page max) of your experiments including which parameters produced the quickest solution and the effect of your changes on GA performance. Include data (graphics etc) to back up your claims.</li>
+
+</ol>
+
+
+
+
+<h1>Part 2</h1>
+
+Now it’s time to look at a more complicated environment. In this part, you will implement a genetic algorithm to evolve control strategies for Robby the Robot, as described in Chapter 9 of <em>Complexity: A Guided Tour</em>​ by Melani​e Mitchell (available in the assignment folder on Canvas), A control strategy will be represented as a string of characters that code for the following robot actions:
+
+<ul>
+
+ <li><strong>0</strong> = MoveNorth​</li>
+
+ <li><strong>1</strong>​ = MoveSouth</li>
+
+ <li><strong>2</strong>​ = MoveEast</li>
+
+ <li><strong>3</strong> = MoveWest​</li>
+
+ <li><strong>4</strong>​ = StayPut</li>
+
+ <li><strong>5</strong>​ = PickUpCan</li>
+
+ <li><strong>6</strong>​ = MoveRandom</li>
+
+</ul>
+
+Robby’s reward is increased when Robby picks up a soda can, and decreased if Robby hits a wall. The job of your GA is to evolve a good control strategy that maximizes Robby’s average cumulative reward as it collects empty soda cans for 200 time steps.
+
+
+
+
+Your GA will maintain a population of genomes representing control strategies. Each genome will be a ​<strong>243-character string</strong>​ specifying the action that Robby should take for every possible situation it might find itself in. Robby’s “situation” will be encoded as a 5-character ​<em>percept string</em> specifying what Robby currently sees in their immediate vicinity. For example, the string ‘WECWC’ means there is a wall to the north, an empty grid cell to the south, a soda can to the east, another wall to the west, and a soda can in Robby’s own grid cell.
+
+
+
+
+Each percept string corresponds to a unique code number in the range 0-242, which indicates the (0-base​d) index number of the situation, for more details on this check out page 132 in the chapter noted above. We will use mainly use the percept codes in our problem rather than the strings.
+
+
+
+
+In this environment, there are 243 distinct situations the robot can find themselves in, each of these is represented by a percept string (e.g. ‘WECWC’) and the index of that string (e.g. 240) called the perceptCode. A ​<strong>genome</strong>​ is a string of length 243, comprising of numbers from 0-6 inclusive, each number represents an action and the position in the string tells us when that action should be performed (e.g. If the percept code is 240, robby will perform the action described by the 240th gene of the genome).  For example, if the genome were all 0’s, in any given situation the Robot would move north.
+
+
+
+
+We will use rank ​<strong>selection </strong>​(described more below),​ ​single point ​<strong>crossover, </strong>​and ​<strong>mutation </strong>which​ ​will be characterized as randomly replacing one or more charact​ers in the string.
+
+<h2>Robby’s World</h2>
+
+We have already provided a simulator for Robby’s world in the skeleton code in the folder named ​<strong>robby</strong>​.
+
+<em> </em>
+
+<em>IMPORTANT: Do not put your Python file or any other files inside the folder. Just make sure the folder is in the same location as your program file. You should not modify any of the code in this folder.  </em>
+
+
+
+
+You’ll note at the top of​<strong> part2.py </strong>​the following lines
+
+import robby
+
+rw = robby.World(10, 10)
+
+
+
+
+This handles the setup of the simulator
+
+
+
+
+To interact with the world, you can use the following commands, a full list of commands is shown at the end of this document. :
+
+<ul>
+
+ <li><strong>getCurrentPosition()</strong>​ returns the current 0-based ​<em>row</em>​, ​<em>column</em>​ position of Robby in the grid.</li>
+
+ <li><strong>getPercept()</strong>​ returns the percept string specifying what Robby currently sees to the North, South, East, West, and Here.</li>
+
+ <li><strong>getPerceptCode()</strong>​ returns the code number of the current percept string as an integer in the range 0-242.</li>
+
+ <li><strong>performAction(</strong>​<strong><em>action</em></strong>​<strong>)</strong>​ causes Robby to perform the specified action, where ​<em>action</em> is one of the strings “MoveNorth”, “MoveSouth”, “MoveEast”, “MoveWest”, “StayPut”, “PickUpCan”, or “MoveRandom”.</li>
+
+ <li><strong>graphicsOff(</strong>​<strong><em>message</em></strong>​<strong>=””)</strong>​ turns off the graphics. This is useful for simulating many actions at high speed when evaluating the fitness of a strategy. The optional <em>message</em>​ string will be displayed while the graphics are turned off.</li>
+
+ <li><strong>demo(</strong>​<strong><em>strategy</em></strong>​<strong>, <em>steps</em></strong>​ ​<strong>=200, <em>init</em></strong>​ ​<strong>=0.50)</strong>​ turns on the graphics and demos a strategy for the specified number of simulation steps (default 200) with a randomized soda can density of ​<em>init</em>​ (default 0.50). Optionally, ​<em>init</em>​ can be a string specifying the name of a grid world configuration file created with the save command.</li>
+
+ <li><strong>strategyM</strong>​ is a string representing the hand-coded strategy ​<em>M</em>​ created by Melanie Mitchell, as described in the handout.</li>
+
+</ul>
+
+○    For example, you can watch strategy M in action by typing the command <strong>rw.demo(rw.strategyM)</strong>​ at the Python prompt.
+
+<h2>Setting up your GA</h2>
+
+Enter all your code in part2.py, notice how the skeleton code has all the same functions. Depending on your implementation, you may be able to reuse code from Part 1.
+
+<ul>
+
+ <li><strong>randomGenome(<em>length</em></strong>​ ​<strong>) </strong>should now return a string of the numbers 0-6​</li>
+
+ <li><strong>fitness(</strong>​<strong><em>genome</em></strong>​<strong>) </strong>​- This function should return the average total reward accumulated during a cleaning session when following the strategy. This should be averaged over 25 sessions. Strategies can have negative fitness.</li>
+
+ <li><strong>Hint: performAction(</strong>​<strong><em>action</em></strong>​<strong>) </strong>​returns the reward value of a certain action</li>
+
+ <li><strong>Hint: </strong>​ You may want to look at the code for rw.demo, this can get you started on how to simulate a cleaning session. For computing fitness, be sure to turn of the graphics to increase speed.</li>
+
+ <li><strong>Hint </strong>​you may change the function parameters within your GA to improve efficiency.</li>
+
+</ul>
+
+For this part, you should use ​<em>rank selection</em>​ when selecting genomes for crossover and mutation. Many control strategies can have negative fitness values, which would cause problems with fitness-proportionate selection (see slides for details).
+
+
+
+
+To implement rank selection, first calculate the fitness of each genome in the population. Then sort the genomes by their fitness values (whether positive or negative), in increasing order from lowest to highest fitness. The selection weight of a genome will be its rank number from 1 (lowest) to 200 (highest), instead of the fitness value itself. This will impact the <strong>selectPair</strong>​             function.
+
+
+
+
+We have provided a function ​<strong>sortByFitness </strong>​to aid you in rank selection. Note this is likely not the most efficient way to do this, you may want to adjust this function to improve the speed of your program.
+
+<h2>Experimenting</h2>
+
+We recommend using the following initial parameters for your GA:
+
+<ul>
+
+ <li>Population size: 100</li>
+
+ <li>Crossover rate: 1.0 (meaning 100% probability of single-point crossover)</li>
+
+ <li>Mutation rate: 0.005</li>
+
+ <li>200 actions per cleaning session</li>
+
+ <li>Number of generations: 300</li>
+
+</ul>
+
+<h2>Experiments</h2>
+
+Run your GA for a total of 300 generations. Every 10 generations, your GA should record the best strategy from the current population, along with the strategy’s fitness value in an output file called <strong>GAoutput.txt</strong>​  . More specifically, each line of the file should contain four items separated​  by whitespace, in the following order:
+
+<ul>
+
+ <li>the generation number,</li>
+
+ <li>the average fitness of the whole population for this generation, (3) the fitness value of the best strategy of this generation,</li>
+
+</ul>
+
+(4) the best strategy itself.
+
+
+
+
+You may also want to have your GA periodically demo the best strategy found so far (every 10 or 20 generations, for example). That way, as the evolution proceeds, you can watch Robby’s progress as it learns to clean up the environment.
+
+
+
+
+You should also experiment with different GA settings (population size, number of generations, crossover and mutation rates, etc.) to see how quickly your GA can discover a really good strategy.
+
+
+
+
+Save the best strategy your GA found in a text file called ​<strong>bestStrategy.txt </strong>​for submission
+
+
+
+
+<strong>In your report: </strong>
+
+<ul>
+
+ <li>Write a 1-2 page summary of your experiments, including the GA parameter settings that produced the best strategy.</li>
+
+ <li>You should discuss how efficient the GA is as well as the variation between experiments.</li>
+
+ <li>Be sure to use evidence (screenshots, graphs, etc) to back your claims.</li>
+
+</ul>
+
+
+
+
+<strong>             </strong>
+
+<h2>APPENDIX 1 : Robby World Commands</h2>
+
+<strong> </strong>
+
+<ul>
+
+ <li><strong>getCurrentPosition()</strong>​ returns the current 0-based ​<em>row</em>​, ​<em>column</em>​ position of Robby in the grid.</li>
+
+ <li><strong>getPercept()</strong>​ returns the percept string specifying what Robby currently sees to the North, South, East, West, and Here.</li>
+
+ <li><strong>getPerceptCode()</strong>​ returns the code number of the current percept string as an integer in the range 0-242.</li>
+
+ <li><strong>distributeCans(</strong>​<strong><em>density</em></strong>​<strong>=0.50)</strong>​ randomly distributes soda cans throughout the world, with 0 <u>​&lt;</u> <u>​ </u>​<em>density</em>​ <u>​&lt;</u>​ 1 specifying the probability of a can occupying a grid cell. The default value is 0.50.</li>
+
+ <li><strong>goto(</strong>​<strong><em>row</em></strong>​<strong>, </strong>​<strong><em>column</em></strong>​<strong>)</strong>​ moves Robby to the specified grid location.</li>
+
+ <li><strong>performAction(<em>action</em></strong>​ ​<strong>)</strong>​ causes Robby to perform the specified action, where ​<em>action</em> is one of the strings “MoveNorth”, “MoveSouth”, “MoveEast”, “MoveWest”, “StayPut”, “PickUpCan”, or “MoveRandom”. The following abbreviations are provided for convenience:</li>
+
+</ul>
+
+○    <strong>rw.north() </strong>=​ rw.performAction(“MoveNorth”)
+
+○    <strong>rw.south() </strong>​= rw.performAction(“MoveSouth”)
+
+○    <strong>rw.east() </strong>​= rw.performAction(“MoveEast”)
+
+○    <strong>rw.west()</strong>​= rw.performAction(“MoveWest”)
+
+○    <strong>rw.stay()</strong>​= rw.performAction(“StayPut”)
+
+○    <strong>rw.grab()</strong>​= rw.performAction(“PickUpCan”)
+
+○    <strong>rw.random()</strong>​= rw.performAction(“MoveRandom”)
+
+○    <strong>rw.look()</strong>​= rw.getPercept()
+
+<ul>
+
+ <li><strong>graphicsOff(</strong>​<strong><em>message</em></strong>​<strong>=””)</strong>​ turns off the graphics. This is useful for simulating many actions at high speed when evaluating the fitness of a strategy. The optional ​<em>message</em> string will be displayed while the graphics are turned off.</li>
+
+ <li><strong>graphicsOn()</strong>​ turns the graphics back on, and updates the grid to reflect the current state of the world.</li>
+
+ <li><strong>show()</strong>​ prints out a non-graphical representation of the current state of the world.</li>
+
+ <li><strong>demo(</strong>​<strong><em>strategy</em></strong>​<strong>, <em>steps</em></strong>​ ​<strong>=200, <em>init</em></strong>​ ​<strong>=0.50)</strong>​ turns on the graphics and demos a strategy for the specified number of simulation steps (default 200) with a randomized soda can density of ​<em>init</em>​ (default 0.50). Optionally, ​<em>init</em>​ can be a string specifying the name of a grid world configuration file created with the save command.</li>
+
+ <li><strong>save(</strong>​<strong><em>filename</em></strong>​<strong>)</strong>​ saves the current grid world configuration as a text file, where <em>filename</em>​ is a string.</li>
+
+ <li><strong>load(</strong>​<strong><em>filename</em></strong>​<strong>)</strong>​ loads a grid world configuration from a text file, where ​<em>filename</em>​ is a string.</li>
+
+ <li><strong>strategyM</strong> is a string representing the hand-coded strategy ​ ​<em>M</em>​ created by Melanie Mitchell, as described in the handout.</li>
+
+</ul>
